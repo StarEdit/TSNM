@@ -1,0 +1,66 @@
+@layer utilities {
+	@keyframes slide-down-fade {
+		0% {
+			opacity: 0;
+			transform: translateY(-200px);
+		}
+		100% {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	.animate-slide-down {
+		animation: slide-down-fade 1000ms cubic-bezier(0.22, 1, 0.36, 1) both;
+	}
+
+	/* Flip in along Y axis - right direction */
+	@keyframes flip-book-in-right {
+		0% {
+			transform: perspective(1200px) rotateY(-15deg) translateZ(-12px);
+			transform-origin: center center;
+			opacity: 0;
+		}
+		60% {
+			transform: perspective(1200px) rotateY(3deg) translateZ(0);
+			transform-origin: center center;
+			opacity: 1;
+		}
+		100% {
+			transform: perspective(1200px) rotateY(0deg) translateZ(0);
+			transform-origin: center center;
+			opacity: 1;
+		}
+	}
+
+	/* Flip in along Y axis - left direction */
+	@keyframes flip-book-in-left {
+		0% {
+			transform: perspective(1200px) rotateY(15deg) translateZ(-12px);
+			transform-origin: center center;
+			opacity: 0;
+		}
+		60% {
+			transform: perspective(1200px) rotateY(-3deg) translateZ(0);
+			transform-origin: center center;
+			opacity: 1;
+		}
+		100% {
+			transform: perspective(1200px) rotateY(0deg) translateZ(0);
+			transform-origin: center center;
+			opacity: 1;
+		}
+	}
+
+	.animate-flip-book-in-left {
+		animation: flip-book-in-left 1000ms cubic-bezier(0.22, 1, 0.36, 1) both;
+		backface-visibility: hidden;
+		transform-style: preserve-3d;
+	}
+
+	.animate-flip-book-in-right {
+		animation: flip-book-in-right 1000ms cubic-bezier(0.22, 1, 0.36, 1) both;
+		backface-visibility: hidden;
+		transform-style: preserve-3d;
+	}
+}
