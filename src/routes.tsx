@@ -3,6 +3,7 @@ import CatchAllRoute from '@/pages/CatchAllRoute';
 import Error from '@/pages/Error';
 import MainLayout from '@/components/Layouts/MainLayout';
 import { lazy } from 'react';
+import Home from '@/pages/Home';
 
 const SignIn = lazy(() => import('@/pages/AuthSignIn'));
 const SignUp = lazy(() => import('@/pages/AuthSignUp'));
@@ -27,7 +28,7 @@ export const router = createBrowserRouter([
 		children: [
 			{
 				index: true,
-				element: <div>Hello</div>,
+				element: <Home />,
 			},
 		],
 	},
