@@ -1,9 +1,25 @@
-import Item from '@/components/MusicPlayer/components/Item';
+import Section from '@/components/MusicPlayer/components/Section';
 
 const Home = () => {
 	return (
 		<div>
-			<Item />
+			<Section
+				title="Playing"
+				items={[
+					{
+						id: '1',
+						title: 'Nỗi đau giữa hòa bình',
+						listener: '562.1K',
+						artist: ['Hòa Minzy', 'Nguyễn Văn Chung'],
+					},
+					{
+						id: '2',
+						title: 'Nỗi đau giữa hòa bình',
+						listener: '562.1K',
+						artist: ['Hòa Minzy', 'Nguyễn Văn Chung'],
+					},
+				]}
+			/>
 		</div>
 	);
 };

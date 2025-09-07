@@ -123,11 +123,9 @@
 		@apply border-border outline-ring/50;
 	}
 	body {
-		@apply bg-background text-foreground;
+		@apply bg-background text-foreground min-h-svh scroll-smooth text-sm;
 	}
-}
-
-body {
-	min-height: 100svh;
-	scroll-behavior: smooth;
+	a {
+		@apply hover:text-primary hover:underline;
+	}
 }

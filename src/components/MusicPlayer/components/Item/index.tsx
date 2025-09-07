@@ -1,3 +1,4 @@
+import type { ActionHandler } from '@/components/MusicPlayer/components/Section';
 import { Button } from '@/components/ui/button';
 import {
 	DropdownMenu,
@@ -7,8 +8,9 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Copy, EllipsisVertical, Headphones, ListPlus, Music3, Pause, Play, Trash2 } from 'lucide-react';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
-export interface ItemProps {
+export interface ItemProps extends ActionHandler {
 	showMore?: boolean;
 	isPlay?: boolean;
 	thumbnail?: string;
@@ -16,16 +18,12 @@ export interface ItemProps {
 	title: string;
 	artist: string[];
 	listener: string;
-	onRemove?: (id: string) => void;
-	onAdd?: (id: string) => void;
-	onCopy?: (id: string) => void;
-	onGo?: (id: string) => void;
 }
 
 const Item = ({
 	showMore: showMoreProp = false,
 	isPlay = false,
-	thumbnail = 'auth-bg.jpg',
+	thumbnail,
 	id,
 	title,
 	artist = [],
@@ -56,11 +54,7 @@ const Item = ({
 	};
 
 	return (
-		<div
-			className="flex h-[40px] items-center gap-2 p-4"
-			onMouseEnter={handleMouseEnter}
-			onMouseLeave={handleMouseLeave}
-		>
+		<div className="flex h-[40px] items-center gap-2" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
 			{thumbnail && (
 				<div
 					className="relative h-[40px] w-[40px] rounded bg-cover bg-center"
@@ -68,12 +62,23 @@ const Item = ({
 						backgroundImage: `url(${thumbnail})`,
 					}}
 				>
-					<div className="absolute right-0 bottom-0">{isPlay ? <Pause size={16} /> : <Play size={16} />}</div>
+					<div className="absolute right-0 bottom-0 text-white">
+						{isPlay ? <Pause size={16} /> : <Play size={16} />}
+					</div>
 				</div>
 			)}
 			<div className="min-w-0 flex-1">
 				<div className="truncate">{title}</div>
-				<div className="truncate">{artist.join(', ')}</div>
+				<div className="text-muted-foreground truncate text-xs">
+					{artist.map((item, index) => (
+						<>
+							<Link key={index} to={item}>
+								{item}
+							</Link>
+							{index + 1 < artist.length ? ', ' : ''}
+						</>
+					))}
+				</div>
 			</div>
 			{showMore ? (
 				<DropdownMenu onOpenChange={handleDropdownOpenChange}>
@@ -109,7 +114,7 @@ const Item = ({
 					</DropdownMenuContent>
 				</DropdownMenu>
 			) : (
-				<div className="flex items-center gap-2">
+				<div className="text-muted-foreground flex items-center gap-2 text-xs">
 					<Headphones size={16} />
 					<span>{listener || 0}</span>
 				</div>
