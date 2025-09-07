@@ -12,12 +12,6 @@ const Home = () => {
 						listener: '562.1K',
 						artist: ['Hòa Minzy', 'Nguyễn Văn Chung'],
 					},
-					{
-						id: '2',
-						title: 'Nỗi đau giữa hòa bình',
-						listener: '562.1K',
-						artist: ['Hòa Minzy', 'Nguyễn Văn Chung'],
-					},
 				]}
 			/>
 		</div>

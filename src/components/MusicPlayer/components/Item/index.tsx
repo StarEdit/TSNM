@@ -6,12 +6,12 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { cn } from '@/lib/utils';
 import { Copy, EllipsisVertical, Headphones, ListPlus, Music3, Pause, Play, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 export interface ItemProps extends ActionHandler {
-	showMore?: boolean;
 	isPlay?: boolean;
 	thumbnail?: string;
 	id: string;
@@ -21,7 +21,6 @@ export interface ItemProps extends ActionHandler {
 }
 
 const Item = ({
-	showMore: showMoreProp = false,
 	isPlay = false,
 	thumbnail,
 	id,
@@ -33,28 +32,14 @@ const Item = ({
 	onCopy,
 	onGo,
 }: ItemProps) => {
-	const [showMore, setShowMore] = useState(showMoreProp);
-	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+	const [open, setOpen] = useState(false);
 
-	const handleMouseEnter = () => {
-		setShowMore(true);
-	};
-
-	const handleMouseLeave = () => {
-		if (!isDropdownOpen) {
-			setShowMore(false);
-		}
-	};
-
-	const handleDropdownOpenChange = (open: boolean) => {
-		setIsDropdownOpen(open);
-		if (!open) {
-			setShowMore(false);
-		}
+	const handleOpenChange = (open: boolean) => {
+		setOpen(open);
 	};
 
 	return (
-		<div className="flex h-[40px] items-center gap-2" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+		<div className="group relative flex h-[40px] items-center gap-2">
 			{thumbnail && (
 				<div
 					className="relative h-[40px] w-[40px] rounded bg-cover bg-center"
@@ -80,45 +65,54 @@ const Item = ({
 					))}
 				</div>
 			</div>
-			{showMore ? (
-				<DropdownMenu onOpenChange={handleDropdownOpenChange}>
-					<DropdownMenuTrigger asChild>
-						<Button variant="ghost" size="icon">
-							<EllipsisVertical />
-						</Button>
-					</DropdownMenuTrigger>
-					<DropdownMenuContent>
-						<DropdownMenuItem onSelect={() => onRemove?.(id)}>
-							<div className="flex items-center gap-2">
-								<Trash2 />
-								<span>Remove to queue</span>
-							</div>
-						</DropdownMenuItem>
-						<DropdownMenuItem onSelect={() => onAdd?.(id)}>
-							<div className="flex items-center gap-2">
-								<ListPlus /> <span>Add to queue</span>
-							</div>
-						</DropdownMenuItem>
-						<DropdownMenuItem onSelect={() => onCopy?.(id)}>
-							<div className="flex items-center gap-2">
-								<Copy />
-								<span>Copy link</span>
-							</div>
-						</DropdownMenuItem>
-						<DropdownMenuItem onSelect={() => onGo?.(id)}>
-							<div className="flex items-center gap-2">
-								<Music3 />
-								<span>Go to song</span>
-							</div>
-						</DropdownMenuItem>
-					</DropdownMenuContent>
-				</DropdownMenu>
-			) : (
-				<div className="text-muted-foreground flex items-center gap-2 text-xs">
-					<Headphones size={16} />
-					<span>{listener || 0}</span>
-				</div>
-			)}
+
+			<DropdownMenu open={open} onOpenChange={handleOpenChange}>
+				<DropdownMenuTrigger asChild>
+					<Button
+						variant="ghost"
+						size="icon"
+						className={cn('absolute right-0 z-10 opacity-0 group-hover:opacity-100', {
+							['opacity-100']: open,
+						})}
+					>
+						<EllipsisVertical />
+					</Button>
+				</DropdownMenuTrigger>
+				<DropdownMenuContent>
+					<DropdownMenuItem onSelect={() => onRemove?.(id)}>
+						<div className="flex items-center gap-2">
+							<Trash2 />
+							<span>Remove to queue</span>
+						</div>
+					</DropdownMenuItem>
+					<DropdownMenuItem onSelect={() => onAdd?.(id)}>
+						<div className="flex items-center gap-2">
+							<ListPlus /> <span>Add to queue</span>
+						</div>
+					</DropdownMenuItem>
+					<DropdownMenuItem onSelect={() => onCopy?.(id)}>
+						<div className="flex items-center gap-2">
+							<Copy />
+							<span>Copy link</span>
+						</div>
+					</DropdownMenuItem>
+					<DropdownMenuItem onSelect={() => onGo?.(id)}>
+						<div className="flex items-center gap-2">
+							<Music3 />
+							<span>Go to song</span>
+						</div>
+					</DropdownMenuItem>
+				</DropdownMenuContent>
+			</DropdownMenu>
+
+			<div
+				className={cn('text-muted-foreground flex items-center gap-2 text-xs opacity-100 group-hover:opacity-0', {
+					['opacity-0']: open,
+				})}
+			>
+				<Headphones size={16} />
+				<span>{listener || 0}</span>
+			</div>
 		</div>
 	);
 };
