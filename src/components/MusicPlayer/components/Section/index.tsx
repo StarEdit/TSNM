@@ -20,7 +20,7 @@ const Section = ({ className, title, items = [], onRemove, onAdd, onCopy, onGo }
 			<div className="text-muted-foreground mb-2 border-b pb-1">{title}</div>
 			<div className="flex flex-col gap-y-2">
 				{items.map((item) => (
-					<Item {...item} onRemove={onRemove} onAdd={onAdd} onCopy={onCopy} onGo={onGo} />
+					<Item key={item.id} {...item} onRemove={onRemove} onAdd={onAdd} onCopy={onCopy} onGo={onGo} />
 				))}
 			</div>
 		</div>

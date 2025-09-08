@@ -11,9 +11,13 @@ const SongList = () => {
 					{
 						id: '1',
 						title: 'Nỗi đau giữa hòa bình',
+						src: '',
 						listener: '562.1K',
-						artist: ['Hòa Minzy', 'Nguyễn Văn Chung'],
-						thumbnail: 'auth-bg.jpg',
+						artists: [
+							{ id: '1', fullName: 'Hòa Minzy' },
+							{ id: '2', fullName: 'Nguyễn Văn Chung' },
+						],
+						thumbnail: '/assets/images/auth-bg.jpg',
 					},
 				]}
 			/>
@@ -26,50 +30,14 @@ const SongList = () => {
 						{
 							id: '1',
 							title: 'Nỗi đau giữa hòa bình',
+							src: '',
 							listener: '562.1K',
-							artist: ['Hòa Minzy', 'Nguyễn Văn Chung'],
-						},
-						{
-							id: '2',
-							title: 'Nỗi đau giữa hòa bình',
-							listener: '562.1K',
-							artist: ['Hòa Minzy', 'Nguyễn Văn Chung', 'Sơn Tùng - MTP'],
-						},
-						{
-							id: '1',
-							title: 'Nỗi đau giữa hòa bình',
-							listener: '562.1K',
-							artist: ['Hòa Minzy', 'Nguyễn Văn Chung'],
-						},
-						{
-							id: '2',
-							title: 'Nỗi đau giữa hòa bình',
-							listener: '562.1K',
-							artist: ['Hòa Minzy', 'Nguyễn Văn Chung', 'Sơn Tùng - MTP'],
-						},
-						{
-							id: '1',
-							title: 'Nỗi đau giữa hòa bình',
-							listener: '562.1K',
-							artist: ['Hòa Minzy', 'Nguyễn Văn Chung'],
-						},
-						{
-							id: '2',
-							title: 'Nỗi đau giữa hòa bình',
-							listener: '562.1K',
-							artist: ['Hòa Minzy', 'Nguyễn Văn Chung', 'Sơn Tùng - MTP'],
-						},
-						{
-							id: '1',
-							title: 'Nỗi đau giữa hòa bình',
-							listener: '562.1K',
-							artist: ['Hòa Minzy', 'Nguyễn Văn Chung'],
-						},
-						{
-							id: '2',
-							title: 'Nỗi đau giữa hòa bình',
-							listener: '562.1K',
-							artist: ['Hòa Minzy', 'Nguyễn Văn Chung', 'Sơn Tùng - MTP'],
+							artists: [
+								{ id: '1', fullName: 'Hòa Minzy' },
+								{ id: '2', fullName: 'Nguyễn Văn Chung' },
+							],
+							thumbnail: '/assets/images/auth-bg.jpg',
+							showThumbnail: false,
 						},
 					]}
 				/>
@@ -83,14 +51,14 @@ const SongList = () => {
 						{
 							id: '1',
 							title: 'Nỗi đau giữa hòa bình',
+							src: '',
 							listener: '562.1K',
-							artist: ['Hòa Minzy', 'Nguyễn Văn Chung'],
-						},
-						{
-							id: '2',
-							title: 'Nỗi đau giữa hòa bình',
-							listener: '562.1K',
-							artist: ['Hòa Minzy', 'Nguyễn Văn Chung'],
+							artists: [
+								{ id: '1', fullName: 'Hòa Minzy' },
+								{ id: '2', fullName: 'Nguyễn Văn Chung' },
+							],
+							thumbnail: '/assets/images/auth-bg.jpg',
+							showThumbnail: false,
 						},
 					]}
 				/>

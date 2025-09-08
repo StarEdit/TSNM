@@ -7,25 +7,23 @@ import {
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
+import type { Song } from '@/types/model/Song';
 import { Copy, EllipsisVertical, Headphones, ListPlus, Music3, Pause, Play, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-export interface ItemProps extends ActionHandler {
+export interface ItemProps extends ActionHandler, Song {
 	isPlay?: boolean;
-	thumbnail?: string;
-	id: string;
-	title: string;
-	artist: string[];
-	listener: string;
+	showThumbnail?: boolean;
 }
 
 const Item = ({
 	isPlay = false,
+	showThumbnail = true,
 	thumbnail,
 	id,
 	title,
-	artist = [],
+	artists = [],
 	listener,
 	onRemove,
 	onAdd,
@@ -40,7 +38,7 @@ const Item = ({
 
 	return (
 		<div className="group relative flex h-[40px] items-center gap-2">
-			{thumbnail && (
+			{showThumbnail && (
 				<div
 					className="relative h-[40px] w-[40px] rounded bg-cover bg-center"
 					style={{
@@ -55,13 +53,11 @@ const Item = ({
 			<div className="min-w-0 flex-1">
 				<div className="truncate">{title}</div>
 				<div className="text-muted-foreground truncate text-xs">
-					{artist.map((item, index) => (
-						<>
-							<Link key={index} to={item}>
-								{item}
-							</Link>
-							{index + 1 < artist.length ? ', ' : ''}
-						</>
+					{artists.map((item, index) => (
+						<Link key={item.id} to={item.id}>
+							{item.fullName}
+							{index + 1 < artists.length ? ', ' : ''}
+						</Link>
 					))}
 				</div>
 			</div>
