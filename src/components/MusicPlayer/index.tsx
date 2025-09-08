@@ -8,6 +8,7 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Slider } from '@/components/ui/slider';
 import { formatTime } from '@/lib/format';
 import { cn } from '@/lib/utils';
@@ -25,6 +26,7 @@ import {
 	Repeat1,
 	Shuffle,
 	Volume2,
+	VolumeX,
 } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import ReactPlayer from 'react-player';
@@ -36,6 +38,7 @@ const MusicPlayer = () => {
 	const [showSongList, setShowSongList] = useState(false);
 
 	const [playing, setPlaying] = useState(false);
+	const [volume, setVolume] = useState(0);
 	const [shuffle, setShuffle] = useState(false);
 	const [loop, setLoop] = useState<'one' | 'all' | 'none'>('none');
 	const [played, setPlayed] = useState(0);
@@ -45,6 +48,10 @@ const MusicPlayer = () => {
 
 	const handleShowSongList = () => {
 		setShowSongList(!showSongList);
+	};
+
+	const handleVolume = (value: number[]) => {
+		setVolume(value[0]);
 	};
 
 	const handlePlay = () => {
@@ -110,9 +117,24 @@ const MusicPlayer = () => {
 
 			<div className="flex flex-col gap-y-4 p-4">
 				<div className="flex items-center gap-2">
-					<Button variant="ghost" size="icon">
-						<Volume2 />
-					</Button>
+					<Popover modal={false}>
+						<PopoverTrigger asChild>
+							<Button variant="ghost" size="icon" className="relative z-[51]">
+								{volume === 0 ? <VolumeX /> : <Volume2 />}
+							</Button>
+						</PopoverTrigger>
+						<PopoverContent side="top" className="w-10" sideOffset={-40}>
+							<Slider
+								className="mb-6"
+								orientation="vertical"
+								value={[volume]}
+								max={1}
+								step={0.01}
+								onValueChange={handleVolume}
+							/>
+						</PopoverContent>
+					</Popover>
+
 					<Button className="flex-1" variant="secondary" onClick={handleShowSongList}>
 						{showSongList ? 'Now playing' : 'Song list'}
 					</Button>
@@ -206,6 +228,7 @@ const MusicPlayer = () => {
 					height="0"
 					onTimeUpdate={handleTimeUpdate}
 					onDurationChange={handleDuration}
+					volume={volume}
 				/>
 			</div>
 		</div>
