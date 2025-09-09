@@ -113,14 +113,10 @@ const MusicPlayer = () => {
 	}, []);
 
 	const handleSeekChange = useCallback((value: number[]) => {
-		setPlayed(value[0]);
-	}, []);
-
-	const handleSeekMouseUp = useCallback(() => {
 		if (!playerRef.current) return;
-		playerRef.current.currentTime = played;
-		setPlaying(true);
-	}, [played]);
+		setPlayed(value[0]);
+		playerRef.current.currentTime = value[0];
+	}, []);
 
 	const handleEnded = useCallback(() => {
 		if (loop === 'none' && currentSongIndex === songList.length - 1) {
@@ -204,7 +200,7 @@ const MusicPlayer = () => {
 						step={1}
 						onValueChange={handleSeekChange}
 						onPointerDown={() => setPlaying(false)}
-						onPointerUp={handleSeekMouseUp}
+						onPointerUp={() => setPlaying(true)}
 					/>
 					<div className="text-muted-foreground w-8 text-right text-xs">{formatTime(duration)}</div>
 				</div>
