@@ -34,11 +34,9 @@ import ReactPlayer from 'react-player';
 const MusicPlayer = () => {
 	const [songList, setSongList] = useState<Song[]>([]);
 	const [currentSongIndex, setCurrentSongIndex] = useState(0);
-
 	const [showSongList, setShowSongList] = useState(false);
-
 	const [playing, setPlaying] = useState(false);
-	const [volume, setVolume] = useState(0);
+	const [volume, setVolume] = useState(0.7);
 	const [shuffle, setShuffle] = useState(false);
 	const [loop, setLoop] = useState<'one' | 'all' | 'none'>('none');
 	const [played, setPlayed] = useState(0);
@@ -67,7 +65,20 @@ const MusicPlayer = () => {
 	};
 
 	const handleNext = () => {
-		setCurrentSongIndex((prev) => (prev >= songList.length ? prev : prev + 1));
+		if (shuffle) {
+			setCurrentSongIndex(Math.floor(Math.random() * songList.length));
+			return;
+		}
+
+		setCurrentSongIndex((prev) => {
+			const isLastSong = prev >= songList.length - 1;
+
+			if (loop === 'all') {
+				return isLastSong ? 0 : prev + 1;
+			}
+
+			return isLastSong ? prev : prev + 1;
+		});
 	};
 
 	const handleShuffle = () => {
@@ -105,6 +116,14 @@ const MusicPlayer = () => {
 
 		playerRef.current.currentTime = played;
 		setPlaying(true);
+	};
+
+	const handleEnded = () => {
+		if (loop === 'none' && currentSongIndex === songList.length - 1) {
+			setPlaying(false);
+		} else {
+			handleNext();
+		}
 	};
 
 	useEffect(() => {
@@ -191,7 +210,12 @@ const MusicPlayer = () => {
 					>
 						<Shuffle />
 					</Button>
-					<Button variant="ghost" size="icon" onClick={handlePrev} disabled={currentSongIndex === 0}>
+					<Button
+						variant="ghost"
+						size="icon"
+						onClick={handlePrev}
+						disabled={currentSongIndex === 0 && !shuffle && loop !== 'all'}
+					>
 						<ChevronFirst />
 					</Button>
 					{playing ? (
@@ -203,8 +227,12 @@ const MusicPlayer = () => {
 							<Play />
 						</Button>
 					)}
-
-					<Button variant="ghost" size="icon" onClick={handleNext} disabled={currentSongIndex === songList.length - 1}>
+					<Button
+						variant="ghost"
+						size="icon"
+						onClick={handleNext}
+						disabled={currentSongIndex === songList.length - 1 && !shuffle && loop !== 'all'}
+					>
 						<ChevronLast />
 					</Button>
 					<Button
@@ -229,6 +257,7 @@ const MusicPlayer = () => {
 					onTimeUpdate={handleTimeUpdate}
 					onDurationChange={handleDuration}
 					volume={volume}
+					onEnded={handleEnded}
 				/>
 			</div>
 		</div>
