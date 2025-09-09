@@ -28,7 +28,7 @@ import {
 	Volume2,
 	VolumeX,
 } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import ReactPlayer from 'react-player';
 
 const MusicPlayer = () => {
@@ -44,27 +44,36 @@ const MusicPlayer = () => {
 
 	const playerRef = useRef<HTMLVideoElement | null>(null);
 
-	const handleShowSongList = () => {
-		setShowSongList(!showSongList);
-	};
+	const handleShowSongList = useCallback(() => {
+		setShowSongList((prev) => !prev);
+	}, []);
 
-	const handleVolume = (value: number[]) => {
+	const handleVolume = useCallback((value: number[]) => {
 		setVolume(value[0]);
-	};
+	}, []);
 
-	const handlePlay = () => {
-		setPlaying(true);
-	};
+	const handleTogglePlay = useCallback(() => {
+		setPlaying((prev) => !prev);
+	}, []);
 
-	const handlePause = () => {
-		setPlaying(false);
-	};
+	const handlePrev = useCallback(() => {
+		if (shuffle) {
+			setCurrentSongIndex(Math.floor(Math.random() * songList.length));
+			return;
+		}
 
-	const handlePrev = () => {
-		setCurrentSongIndex((prev) => (prev <= 0 ? prev : prev - 1));
-	};
+		setCurrentSongIndex((prev) => {
+			const isFirstSong = prev <= 0;
 
-	const handleNext = () => {
+			if (loop === 'all') {
+				return isFirstSong ? songList.length - 1 : prev - 1;
+			}
+
+			return isFirstSong ? prev : prev - 1;
+		});
+	}, [shuffle, loop, songList.length]);
+
+	const handleNext = useCallback(() => {
 		if (shuffle) {
 			setCurrentSongIndex(Math.floor(Math.random() * songList.length));
 			return;
@@ -79,52 +88,53 @@ const MusicPlayer = () => {
 
 			return isLastSong ? prev : prev + 1;
 		});
-	};
+	}, [shuffle, loop, songList.length]);
 
-	const handleShuffle = () => {
-		setShuffle(!shuffle);
-	};
+	const handleShuffle = useCallback(() => {
+		setShuffle((prev) => !prev);
+	}, []);
 
-	const handleLoop = () => {
-		if (loop === 'none') {
-			setLoop('one');
-		} else if (loop === 'one') {
-			setLoop('all');
-		} else {
-			setLoop('none');
-		}
-	};
+	const handleLoop = useCallback(() => {
+		setLoop((prev) => {
+			if (prev === 'none') return 'one';
+			if (prev === 'one') return 'all';
+			return 'none';
+		});
+	}, []);
 
-	const handleDuration = () => {
+	const handleDuration = useCallback(() => {
 		if (!playerRef.current) return;
-
 		setDuration(playerRef.current.duration);
-	};
+	}, []);
 
-	const handleTimeUpdate = () => {
+	const handleTimeUpdate = useCallback(() => {
 		if (!playerRef.current) return;
-
 		setPlayed(playerRef.current.currentTime);
-	};
+	}, []);
 
-	const handleSeekChange = (value: number[]) => {
+	const handleSeekChange = useCallback((value: number[]) => {
 		setPlayed(value[0]);
-	};
+	}, []);
 
-	const handleSeekMouseUp = () => {
+	const handleSeekMouseUp = useCallback(() => {
 		if (!playerRef.current) return;
-
 		playerRef.current.currentTime = played;
 		setPlaying(true);
-	};
+	}, [played]);
 
-	const handleEnded = () => {
+	const handleEnded = useCallback(() => {
 		if (loop === 'none' && currentSongIndex === songList.length - 1) {
 			setPlaying(false);
 		} else {
 			handleNext();
 		}
-	};
+	}, [loop, currentSongIndex, songList.length, handleNext]);
+
+	// Computed values for button states
+	const isFirstSong = currentSongIndex === 0;
+	const isLastSong = currentSongIndex === songList.length - 1;
+	const canGoPrev = shuffle || loop === 'all' || !isFirstSong;
+	const canGoNext = shuffle || loop === 'all' || !isLastSong;
 
 	useEffect(() => {
 		setSongList(MOCK_SONGS);
@@ -193,7 +203,7 @@ const MusicPlayer = () => {
 						max={duration}
 						step={1}
 						onValueChange={handleSeekChange}
-						onPointerDown={handlePause}
+						onPointerDown={() => setPlaying(false)}
 						onPointerUp={handleSeekMouseUp}
 					/>
 					<div className="text-muted-foreground w-8 text-right text-xs">{formatTime(duration)}</div>
@@ -210,29 +220,13 @@ const MusicPlayer = () => {
 					>
 						<Shuffle />
 					</Button>
-					<Button
-						variant="ghost"
-						size="icon"
-						onClick={handlePrev}
-						disabled={currentSongIndex === 0 && !shuffle && loop !== 'all'}
-					>
+					<Button variant="ghost" size="icon" onClick={handlePrev} disabled={!canGoPrev}>
 						<ChevronFirst />
 					</Button>
-					{playing ? (
-						<Button variant="ghost" size="icon" onClick={handlePause}>
-							<Pause />
-						</Button>
-					) : (
-						<Button variant="ghost" size="icon" onClick={handlePlay}>
-							<Play />
-						</Button>
-					)}
-					<Button
-						variant="ghost"
-						size="icon"
-						onClick={handleNext}
-						disabled={currentSongIndex === songList.length - 1 && !shuffle && loop !== 'all'}
-					>
+					<Button variant="ghost" size="icon" onClick={handleTogglePlay}>
+						{playing ? <Pause /> : <Play />}
+					</Button>
+					<Button variant="ghost" size="icon" onClick={handleNext} disabled={!canGoNext}>
 						<ChevronLast />
 					</Button>
 					<Button
