@@ -24,7 +24,7 @@ const Item = ({
 	id,
 	title,
 	artists = [],
-	listener,
+	playCount,
 	onRemove,
 	onAdd,
 	onCopy,
@@ -107,7 +107,7 @@ const Item = ({
 				})}
 			>
 				<Headphones size={16} />
-				<span>{listener || 0}</span>
+				<span>{playCount || 0}</span>
 			</div>
 		</div>
 	);

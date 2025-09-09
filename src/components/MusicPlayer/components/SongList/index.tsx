@@ -12,12 +12,13 @@ const SongList = () => {
 						id: '1',
 						title: 'Nỗi đau giữa hòa bình',
 						src: '',
-						listener: '562.1K',
+						playCount: '562.1K',
 						artists: [
 							{ id: '1', fullName: 'Hòa Minzy' },
 							{ id: '2', fullName: 'Nguyễn Văn Chung' },
 						],
 						thumbnail: '/assets/images/auth-bg.jpg',
+						duration: 519,
 					},
 				]}
 			/>
@@ -31,13 +32,14 @@ const SongList = () => {
 							id: '1',
 							title: 'Nỗi đau giữa hòa bình',
 							src: '',
-							listener: '562.1K',
+							playCount: '562.1K',
 							artists: [
 								{ id: '1', fullName: 'Hòa Minzy' },
 								{ id: '2', fullName: 'Nguyễn Văn Chung' },
 							],
 							thumbnail: '/assets/images/auth-bg.jpg',
 							showThumbnail: false,
+							duration: 519,
 						},
 					]}
 				/>
@@ -52,13 +54,14 @@ const SongList = () => {
 							id: '1',
 							title: 'Nỗi đau giữa hòa bình',
 							src: '',
-							listener: '562.1K',
+							playCount: '562.1K',
 							artists: [
 								{ id: '1', fullName: 'Hòa Minzy' },
 								{ id: '2', fullName: 'Nguyễn Văn Chung' },
 							],
 							thumbnail: '/assets/images/auth-bg.jpg',
 							showThumbnail: false,
+							duration: 519,
 						},
 					]}
 				/>

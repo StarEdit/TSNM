@@ -1,12 +1,13 @@
-import { createBrowserRouter } from 'react-router-dom';
+import MainLayout from '@/components/Layouts/MainLayout';
 import CatchAllRoute from '@/pages/CatchAllRoute';
 import Error from '@/pages/Error';
-import MainLayout from '@/components/Layouts/MainLayout';
-import { lazy } from 'react';
 import Home from '@/pages/Home';
+import { lazy } from 'react';
+import { createBrowserRouter } from 'react-router-dom';
 
 const SignIn = lazy(() => import('@/pages/AuthSignIn'));
 const SignUp = lazy(() => import('@/pages/AuthSignUp'));
+const Song = lazy(() => import('@/pages/Song'));
 
 export const ROUTES = {
 	HOME: '/',
@@ -18,6 +19,8 @@ export const ROUTES = {
 	SIGN_IN: '/sign-in',
 	SIGN_UP: '/sign-up',
 	FORGOT_PASSWORD: '/forgot-password',
+
+	SONG: '/song/:id',
 } as const;
 
 export const router = createBrowserRouter([
@@ -29,6 +32,10 @@ export const router = createBrowserRouter([
 			{
 				index: true,
 				element: <Home />,
+			},
+			{
+				path: ROUTES.SONG,
+				element: <Song />,
 			},
 		],
 	},

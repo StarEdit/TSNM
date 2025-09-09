@@ -1,4 +1,6 @@
+import type { Album } from '@/types/model/Album';
 import type { Artist } from '@/types/model/Artist';
+import type { Genre } from '@/types/model/Genre';
 
 export interface LyricLine {
 	id: string;
@@ -12,8 +14,10 @@ export interface Song {
 	src: string;
 	title: string;
 	thumbnail?: string;
-	duration?: number;
 	artists: Artist[];
+	album?: Album;
+	duration: number;
+	genre?: Genre;
 	lyrics?: LyricLine[];
-	listener?: string;
+	playCount: string;
 }
