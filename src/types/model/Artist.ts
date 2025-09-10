@@ -3,4 +3,5 @@ export interface Artist {
 	fullName: string;
 	bio?: string;
 	thumbnail?: string;
+	followers?: number;
 }
