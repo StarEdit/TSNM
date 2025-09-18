@@ -19,6 +19,7 @@ const SongList = () => {
 						],
 						thumbnail: '/assets/images/auth-bg.jpg',
 						duration: 519,
+						like: 1000,
 					},
 				]}
 			/>
@@ -40,6 +41,7 @@ const SongList = () => {
 							thumbnail: '/assets/images/auth-bg.jpg',
 							showThumbnail: false,
 							duration: 519,
+							like: 1000,
 						},
 					]}
 				/>
@@ -62,6 +64,7 @@ const SongList = () => {
 							thumbnail: '/assets/images/auth-bg.jpg',
 							showThumbnail: false,
 							duration: 519,
+							like: 1000,
 						},
 					]}
 				/>

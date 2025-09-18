@@ -10,6 +10,7 @@ export const MOCK_SONGS = [
 		],
 		thumbnail: '/assets/images/auth-bg.jpg',
 		duration: 319.058833,
+		like: 1000,
 	},
 	{
 		id: '2',
@@ -22,6 +23,7 @@ export const MOCK_SONGS = [
 		],
 		thumbnail: '/assets/images/auth-bg.jpg',
 		duration: 281.976349,
+		like: 1000,
 	},
 	{
 		id: '3',
@@ -34,5 +36,6 @@ export const MOCK_SONGS = [
 		],
 		thumbnail: '/assets/images/auth-bg.jpg',
 		duration: 290.854125,
+		like: 1000,
 	},
 ];

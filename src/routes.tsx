@@ -8,6 +8,7 @@ import { createBrowserRouter } from 'react-router-dom';
 const SignIn = lazy(() => import('@/pages/AuthSignIn'));
 const SignUp = lazy(() => import('@/pages/AuthSignUp'));
 const Song = lazy(() => import('@/pages/Song'));
+const Playlist = lazy(() => import('@/pages/Playlist'));
 
 export const ROUTES = {
 	HOME: '/',
@@ -21,6 +22,7 @@ export const ROUTES = {
 	FORGOT_PASSWORD: '/forgot-password',
 
 	SONG: '/song/:id',
+	PLAYLIST: '/playlist/:id',
 } as const;
 
 export const router = createBrowserRouter([
@@ -36,6 +38,10 @@ export const router = createBrowserRouter([
 			{
 				path: ROUTES.SONG,
 				element: <Song />,
+			},
+			{
+				path: ROUTES.PLAYLIST,
+				element: <Playlist />,
 			},
 		],
 	},

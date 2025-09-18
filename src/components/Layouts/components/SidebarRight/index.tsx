@@ -3,7 +3,7 @@ import { Sidebar, SidebarContent } from '@/components/ui/sidebar';
 
 const SidebarRight = () => {
 	return (
-		<Sidebar side="right" collapsible="none" className="h-screen w-[320px] border-l">
+		<Sidebar side="right" collapsible="none" className="sticky top-0 h-svh w-[320px] border-l">
 			<SidebarContent>
 				<MusicPlayer />
 			</SidebarContent>
