@@ -32,11 +32,13 @@ export const columns: ColumnDef<Pick<Song, 'id' | 'title' | 'artists' | 'duratio
 				aria-label="Select row"
 			/>
 		),
+		size: 60,
 	},
 	{
 		accessorKey: 'title',
 		header: 'Title',
 		cell: ({ row }) => <div className="truncate">{row.getValue('title')}</div>,
+		size: 200,
 	},
 	{
 		accessorKey: 'artists',
@@ -44,6 +46,7 @@ export const columns: ColumnDef<Pick<Song, 'id' | 'title' | 'artists' | 'duratio
 		cell: ({ row }) => {
 			return <AvatarGroup max={3} avatars={row.getValue('artists')} avatarClassName="size-6" />;
 		},
+		size: 200,
 	},
 	{
 		accessorKey: 'like',
@@ -52,6 +55,7 @@ export const columns: ColumnDef<Pick<Song, 'id' | 'title' | 'artists' | 'duratio
 			const like = row.getValue('like') as number;
 			return formatNumber(like);
 		},
+		size: 150,
 	},
 	{
 		accessorKey: 'duration',
@@ -60,6 +64,7 @@ export const columns: ColumnDef<Pick<Song, 'id' | 'title' | 'artists' | 'duratio
 			const duration = row.getValue('duration') as number;
 			return formatTime(duration);
 		},
+		size: 150,
 	},
 	{
 		id: 'actions',
@@ -95,6 +100,7 @@ export const columns: ColumnDef<Pick<Song, 'id' | 'title' | 'artists' | 'duratio
 				</DropdownMenu>
 			);
 		},
+		size: 60,
 	},
 ];
 const SongTable = () => {
@@ -113,14 +119,15 @@ const SongTable = () => {
 	return (
 		<Table>
 			<TableHeader>
-				{table.getSelectedRowModel().rows.length > 0 ? (
-					<TableRow>
-						<TableHead>
-							{flexRender(
-								table.getHeaderGroups()[0].headers[0].column.columnDef.header,
-								table.getHeaderGroups()[0].headers[0].getContext(),
-							)}
-						</TableHead>
+				<TableRow>
+					<TableHead>
+						{flexRender(
+							table.getHeaderGroups()[0].headers[0].column.columnDef.header,
+							table.getHeaderGroups()[0].headers[0].getContext(),
+						)}
+					</TableHead>
+
+					{table.getSelectedRowModel().rows.length > 0 ? (
 						<TableHead colSpan={table.getHeaderGroups()[0].headers.length - 1}>
 							<div className="flex items-center gap-4">
 								{table.getSelectedRowModel().rows.length} selected
@@ -129,27 +136,27 @@ const SongTable = () => {
 								</Button>
 							</div>
 						</TableHead>
-					</TableRow>
-				) : (
-					table.getHeaderGroups().map((headerGroup) => (
-						<TableRow key={headerGroup.id}>
-							{headerGroup.headers.map((header) => {
-								return (
+					) : (
+						table.getHeaderGroups()[0].headers.map((header, index) => {
+							return (
+								index > 0 && (
 									<TableHead key={header.id}>
 										{flexRender(header.column.columnDef.header, header.getContext())}
 									</TableHead>
-								);
-							})}
-						</TableRow>
-					))
-				)}
+								)
+							);
+						})
+					)}
+				</TableRow>
 			</TableHeader>
 			<TableBody>
 				{table.getRowModel().rows?.length ? (
 					table.getRowModel().rows.map((row) => (
 						<TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
 							{row.getVisibleCells().map((cell) => (
-								<TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
+								<TableCell style={{ width: cell.column.getSize() }} key={cell.id}>
+									{flexRender(cell.column.columnDef.cell, cell.getContext())}
+								</TableCell>
 							))}
 						</TableRow>
 					))
