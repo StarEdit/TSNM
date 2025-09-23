@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useState } from 'react';
-import { MOCK_SONGS } from '@/pages/Playlist/utils';
+import { MOCK_SONGS } from '@/pages/Artist/utils';
 import type { Song } from '@/types/model/Song';
 import AvatarGroup from '@/components/AvatarGroup';
 import { formatNumber, formatTime } from '@/lib/format';

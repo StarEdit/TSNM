@@ -9,6 +9,7 @@ const SignIn = lazy(() => import('@/pages/AuthSignIn'));
 const SignUp = lazy(() => import('@/pages/AuthSignUp'));
 const Song = lazy(() => import('@/pages/Song'));
 const Playlist = lazy(() => import('@/pages/Playlist'));
+const Artist = lazy(() => import('@/pages/Artist'));
 
 export const ROUTES = {
 	HOME: '/',
@@ -23,6 +24,7 @@ export const ROUTES = {
 
 	SONG: '/song/:id',
 	PLAYLIST: '/playlist/:id',
+	ARTIST: '/artist/:id',
 } as const;
 
 export const router = createBrowserRouter([
@@ -42,6 +44,10 @@ export const router = createBrowserRouter([
 			{
 				path: ROUTES.PLAYLIST,
 				element: <Playlist />,
+			},
+			{
+				path: ROUTES.ARTIST,
+				element: <Artist />,
 			},
 		],
 	},
